@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Todo-App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Outfit;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="flex flex-col min-h-72 mt-5 border-2 border-black p-4 space-y-4 w-1/2 mx-auto"
+    >
+      <div class="flex justify-center">
+        <h1 class="text-5xl">Todo-App</h1>
+      </div>
+      <div class="flex flex-col space-y-2 justify-center bg-amber-500">
+        <label for="input" class="text-lg font-semibold">Add your Tasks</label>
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="Enter your tasks here"
+          class="border p-2 rounded"
+        />
+        <button
+          id="addTaskButton"
+          class="flex border-4 w-16 px-3 py-1 bg-black text-white rounded-md hover:bg-stone-700"
+        >
+          Add
+        </button>
+      </div>
+      <div>
+        <h2 class="text-2xl">List of Tasks</h2>
+        <button></button>
+        <ul id="taskList" class="list-disc pl-5"></ul>
+        <!-- Add your tasks list here -->
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("addTaskButton")
+          .addEventListener("click", function () {
+            var taskInput = document.getElementById("taskInput");
+            var taskList = document.getElementById("taskList");
+
+            if (taskInput.value.trim() !== "") {
+              var listItem = document.createElement("li");
+              listItem.className = "flex justify-between items-center mb-2";
+
+              var taskspan = document.createElement("div");
+              taskspan.textContent = taskInput.value;
+              listItem.appendChild(taskspan);
+
+              var buttonGroup = document.createElement("button");
+              buttonGroup.className = "flex space-x-2";
+
+              var completeButton = document.createElement("button");
+              completeButton.textContent = "Complete";
+              completeButton.className =
+                "bg-green-500 text-white px-2 py-1 rounded";
+              completeButton.addEventListener("click", function () {
+                taskspan.classList.toggle("line-through");
+              });
+              buttonGroup.appendChild(completeButton);
+
+              var removeButton = document.createElement("button");
+              removeButton.textContent = "remove";
+              removeButton.className =
+                "bg-red-500 px-2 py-1 rounded text-white";
+              removeButton.addEventListener("click", function () {
+                taskList.removeChild(listItem);
+              });
+              buttonGroup.appendChild(removeButton);
+
+              listItem.appendChild(buttonGroup);
+              taskList.appendChild(listItem);
+
+              taskInput.value = "";
+            }
+          });
+
+        document
+          .getElementById("taskInput")
+          .addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+              document.getElementById("addTaskButton").click();
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
